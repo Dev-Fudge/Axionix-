@@ -15,123 +15,305 @@
       html {
         scroll-behavior: smooth;
       }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      .image-zoom {
+        transition: transform 0.3s ease;
+      }
+      .image-zoom:hover {
+        transform: scale(1.05);
+      }
+      .slideshow-container {
+        position: relative;
+      }
+      .slide {
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .slide.active {
+        opacity: 1;
+        position: relative;
+      }
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-tr from-blue-50 via-white to-slate-100 text-slate-800 font-sans">
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 w-full backdrop-blur bg-white/70 border-b border-slate-200 shadow-sm">
-      <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-2">
-        <div class="flex items-center gap-2 font-bold text-xl tracking-tight text-blue-900 ml-4 md:ml-6" aria-label="Axionix">
-          <span
-            class="inline-block w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 -my-6 bg-[url('Images/Axionix%20log.png')] bg-contain bg-no-repeat bg-center"
-            role="img"
-            aria-label="Axionix logo"
-          ></span>
-          <span class="sr-only">Axionix</span>
+    <nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-slate-200/80 shadow-sm">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex items-center gap-2 font-bold text-xl tracking-tight text-blue-900" aria-label="Axionix">
+          <img
+            src="Images/Axionix log.png"
+            alt="Axionix Logo"
+            class="h-16 w-auto md:h-20 lg:h-24 object-contain"
+          />
         </div>
         <div class="hidden md:flex gap-8 text-base font-medium">
-          <a href="#home" class="hover:text-blue-700 transition-colors duration-150">Home</a>
-          <a href="#services" class="hover:text-blue-700 transition-colors duration-150">Services</a>
-          <a href="#process" class="hover:text-blue-700 transition-colors duration-150">Process</a>
-          <a href="#about" class="hover:text-blue-700 transition-colors duration-150">About</a>
-          <a href="#contact" class="hover:text-blue-700 transition-colors duration-150">Contact</a>
+          <a href="#home" class="hover:text-blue-700 transition-colors duration-200 relative group">
+            Home
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-200 group-hover:w-full"></span>
+          </a>
+          <a href="#services" class="hover:text-blue-700 transition-colors duration-200 relative group">
+            Services
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-200 group-hover:w-full"></span>
+          </a>
+          <a href="#process" class="hover:text-blue-700 transition-colors duration-200 relative group">
+            Process
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-200 group-hover:w-full"></span>
+          </a>
+          <a href="#about" class="hover:text-blue-700 transition-colors duration-200 relative group">
+            About
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-200 group-hover:w-full"></span>
+          </a>
+          <a href="#contact" class="hover:text-blue-700 transition-colors duration-200 relative group">
+            Contact
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-200 group-hover:w-full"></span>
+          </a>
         </div>
         <div class="hidden md:flex">
-          <a href="#contact" class="inline-flex items-center gap-2 rounded-lg bg-blue-700 text-white text-sm font-semibold px-4 py-2 shadow hover:bg-blue-800 transition-colors">
+          <a href="#contact" class="inline-flex items-center gap-2 rounded-lg bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 shadow-md hover:bg-blue-800 hover:shadow-lg transition-all duration-200">
             Request a Survey
           </a>
         </div>
+        <button id="mobile-menu-btn" class="md:hidden text-blue-900 p-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3">
+        <a href="#home" class="block hover:text-blue-700 transition-colors">Home</a>
+        <a href="#services" class="block hover:text-blue-700 transition-colors">Services</a>
+        <a href="#process" class="block hover:text-blue-700 transition-colors">Process</a>
+        <a href="#about" class="block hover:text-blue-700 transition-colors">About</a>
+        <a href="#contact" class="block hover:text-blue-700 transition-colors">Contact</a>
+        <a href="#contact" class="block text-center rounded-lg bg-blue-700 text-white font-semibold px-4 py-2 mt-4">Request a Survey</a>
       </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="pt-10 pb-20 flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-6 gap-10">
-      <div class="flex-1 flex flex-col gap-6 items-start">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900">
-          Multi-Modal Cargo Surveying <br /> &amp; Recoveries, Done Right
-        </h1>
-        <p class="text-lg text-slate-700 max-w-lg">
-          Axionix provides independent, technology-driven surveys for <b>heavy vehicles</b>, <b>aircraft</b>, and
-          <b>ships</b>&mdash;backed by rapid recovery action and digital chain-of-custody you can trust.
-        </p>
-        <div class="flex gap-6 pt-2 flex-wrap">
-          <span class="inline-flex items-center gap-2 text-blue-700 font-semibold">
-            <span class="sr-only">Insured and Certified</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.5l6 2.25v4.5c0 3.04-2.13 5.83-6 7.75-3.87-1.92-6-4.71-6-7.75v-4.5L12 6.5z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 12.5l2 2 3.5-3.5" />
-            </svg>
-            Insured &amp; Certified
-          </span>
-          <span class="inline-flex items-center gap-2 text-blue-700 font-semibold">
-            <span class="sr-only">24/7 Call-Outs</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3h7v7m-1.5-5.5L10 14l-4 1 1-4 9.5-9.5z" />
-            </svg>
-            24/7 Call-Outs
-          </span>
-        </div>
-        <div class="flex gap-3">
-          <a href="#contact" class="inline-flex items-center gap-2 rounded-lg bg-blue-700 text-white text-base font-semibold px-5 py-3 shadow hover:bg-blue-800 transition-colors">
-            Request a Survey
-          </a>
-          <a href="#services" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 text-blue-800 text-base font-semibold px-5 py-3 bg-white hover:border-blue-300 transition-colors">
-            View Services
-          </a>
-        </div>
-      </div>
-      <div class="flex-1 flex items-center justify-center">
-        <div class="relative w-[420px] h-[320px] md:w-[500px] md:h-[360px] bg-gradient-to-br from-blue-200/40 via-white to-blue-100 rounded-3xl shadow-xl border border-slate-200 flex flex-col items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-10 left-10 w-20 h-20 text-blue-700/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h2l1.5-5h11L20 13h1M5 13l-1 4h2.5a2.5 2.5 0 005 0H17a2.5 2.5 0 005 0H22l-1-4M7 13h10" />
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" class="absolute bottom-12 right-16 w-24 h-24 text-blue-900/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-6 9 6-9 6-9-6zm0 0v4l9 6 9-6v-4" />
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-24 h-24 text-yellow-400/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.5 19l19-7-19-7 4 7-4 7zm0 0l7.5-7" />
-          </svg>
-          <span class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-sm font-semibold rounded-full px-6 py-1 shadow">
-            Heavy, Air, Sea
-          </span>
+    <section id="home" class="pt-8 pb-24 md:pt-16 md:pb-32 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+          <div class="flex-1 flex flex-col gap-6 lg:gap-8 items-start animate-fade-in-up">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-blue-900 leading-tight">
+              Multi-Modal Cargo Surveying <br class="hidden sm:block" /> &amp; Recoveries, Done Right
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-700 max-w-2xl leading-relaxed">
+              Axionix provides independent, technology-driven surveys for <strong class="text-blue-900">heavy vehicles</strong>, <strong class="text-blue-900">aircraft</strong>, and
+              <strong class="text-blue-900">ships</strong>&mdash;backed by rapid recovery action and digital chain-of-custody you can trust.
+            </p>
+            <div class="flex gap-6 pt-2 flex-wrap">
+              <span class="inline-flex items-center gap-2 text-blue-700 font-semibold bg-blue-50 px-4 py-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.5l6 2.25v4.5c0 3.04-2.13 5.83-6 7.75-3.87-1.92-6-4.71-6-7.75v-4.5L12 6.5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 12.5l2 2 3.5-3.5" />
+                </svg>
+                Insured &amp; Certified
+              </span>
+              <span class="inline-flex items-center gap-2 text-blue-700 font-semibold bg-blue-50 px-4 py-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                24/7 Call-Outs
+              </span>
+            </div>
+            <div class="flex gap-4 pt-2">
+              <a href="#contact" class="inline-flex items-center gap-2 rounded-lg bg-blue-700 text-white text-base font-semibold px-6 py-3.5 shadow-lg hover:bg-blue-800 hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                Request a Survey
+              </a>
+              <a href="#services" class="inline-flex items-center gap-2 rounded-lg border-2 border-blue-700 text-blue-800 text-base font-semibold px-6 py-3.5 bg-white hover:bg-blue-50 transition-all duration-200">
+                View Services
+              </a>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center w-full lg:w-auto">
+            <div class="relative w-full max-w-lg aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl slideshow-container group">
+              <!-- Slideshow Images -->
+              <div class="slide active">
+                <img 
+                  src="Images/heavy-cargo.jpg" 
+                  alt="Heavy cargo transportation" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slide">
+                <img 
+                  src="Images/heavy-cargo2.jpg" 
+                  alt="Heavy vehicle cargo surveying" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slide">
+                <img 
+                  src="Images/plane-cargo.jpg" 
+                  alt="Aircraft cargo transportation" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slide">
+                <img 
+                  src="Images/ship-cargo.jpg" 
+                  alt="Marine cargo transportation" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slide">
+                <img 
+                  src="Images/ship-cargo2.jpg" 
+                  alt="Marine cargo operations" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent pointer-events-none"></div>
+              
+              <!-- Info Card -->
+              <div class="absolute bottom-6 left-6 right-6 z-10">
+                <div class="bg-white/95 backdrop-blur-sm rounded-lg px-4 py-3 shadow-lg">
+                  <p class="text-blue-900 font-bold text-lg">Heavy, Air, Sea</p>
+                  <p class="text-slate-600 text-sm">Comprehensive cargo surveying across all transport modes</p>
+                </div>
+              </div>
+              
+              <!-- Navigation Arrows -->
+              <button 
+                class="hero-slide-prev absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-blue-900 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                aria-label="Previous slide"
+              >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+              <button 
+                class="hero-slide-next absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-blue-900 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                aria-label="Next slide"
+              >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+              
+              <!-- Dot Indicators -->
+              <div class="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                <button class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-200 active" aria-label="Slide 1"></button>
+                <button class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-200" aria-label="Slide 2"></button>
+                <button class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-200" aria-label="Slide 3"></button>
+                <button class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-200" aria-label="Slide 4"></button>
+                <button class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-200" aria-label="Slide 5"></button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16 bg-white border-y border-slate-100">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-10">Our Services</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="rounded-2xl border border-slate-100 hover:shadow-xl transition-shadow duration-200 bg-white">
-            <div class="flex flex-col gap-4 items-center p-8">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h2l1.5-5h11L20 13h1M5 13l-1 4h2.5a2.5 2.5 0 005 0H17a2.5 2.5 0 005 0H22l-1-4M7 13h10" />
-              </svg>
-              <h3 class="text-xl font-semibold">Heavy Vehicle Surveys</h3>
-              <p class="text-center text-slate-600">
+    <section id="services" class="py-20 bg-white border-y border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">Our Services</h2>
+          <p class="text-lg text-slate-600 max-w-2xl mx-auto">Comprehensive surveying solutions across all transportation modes</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+          <!-- Heavy Vehicle Surveys -->
+          <div class="group rounded-2xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-300 bg-white transform hover:-translate-y-2">
+            <div class="relative h-64 overflow-hidden">
+              <img 
+                src="Images/heavy-cargo2.jpg" 
+                alt="Heavy vehicle cargo surveying" 
+                class="w-full h-full object-cover image-zoom"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <div class="bg-blue-700 text-white rounded-full p-3 shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h2l1.5-5h11L20 13h1M5 13l-1 4h2.5a2.5 2.5 0 005 0H17a2.5 2.5 0 005 0H22l-1-4M7 13h10" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-blue-900 mb-4">Heavy Vehicle Surveys</h3>
+              <p class="text-slate-600 leading-relaxed">
                 Detailed post-transport condition checks, damage analysis and claim documentation for trucks, trailers, plant, mining, and special-move loads.
               </p>
             </div>
           </div>
-          <div class="rounded-2xl border border-slate-100 hover:shadow-xl transition-shadow duration-200 bg-white">
-            <div class="flex flex-col gap-4 items-center p-8">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.5 19l19-7-19-7 4 7-4 7zm0 0l7.5-7" />
-              </svg>
-              <h3 class="text-xl font-semibold">Aircraft Cargo Surveying</h3>
-              <p class="text-center text-slate-600">
+          
+          <!-- Aircraft Cargo Surveying -->
+          <div class="group rounded-2xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-300 bg-white transform hover:-translate-y-2">
+            <div class="relative h-64 overflow-hidden">
+              <img 
+                src="Images/plane-cargo.jpg" 
+                alt="Aircraft cargo surveying" 
+                class="w-full h-full object-cover image-zoom"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/80 to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <div class="bg-yellow-400 text-blue-900 rounded-full p-3 shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.5 19l19-7-19-7 4 7-4 7zm0 0l7.5-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-blue-900 mb-4">Aircraft Cargo Surveying</h3>
+              <p class="text-slate-600 leading-relaxed">
                 Loadmaster oversight, tie-down verification, incident surveys, and cargo condition reporting for airfreight&mdash;including outsize, sensitive, and military consignments.
               </p>
             </div>
           </div>
-          <div class="rounded-2xl border border-slate-100 hover:shadow-xl transition-shadow duration-200 bg-white">
-            <div class="flex flex-col gap-4 items-center p-8">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-6 9 6-9 6-9-6zm0 0v4l9 6 9-6v-4" />
-              </svg>
-              <h3 class="text-xl font-semibold">Marine Surveys &amp; Recoveries</h3>
-              <p class="text-center text-slate-600">
+          
+          <!-- Marine Surveys & Recoveries -->
+          <div class="group rounded-2xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-300 bg-white transform hover:-translate-y-2">
+            <div class="relative h-64 overflow-hidden">
+              <img 
+                src="Images/ship-cargo.jpg" 
+                alt="Marine cargo surveying" 
+                class="w-full h-full object-cover image-zoom"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
+              <div class="absolute top-4 right-4">
+                <div class="bg-blue-900 text-white rounded-full p-3 shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-6 9 6-9 6-9-6zm0 0v4l9 6 9-6v-4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-blue-900 mb-4">Marine Surveys &amp; Recoveries</h3>
+              <p class="text-slate-600 leading-relaxed">
                 Cargo tally, loss assessment, salvage coordination and independent reporting for ships, containers, break-bulk and project cargo.
               </p>
             </div>
@@ -141,129 +323,271 @@
     </section>
 
     <!-- Process Section -->
-    <section id="process" class="py-16 bg-gradient-to-br from-blue-50 via-white to-blue-100">
-      <div class="max-w-5xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-blue-900 mb-8">How It Works</h2>
-        <ol class="grid md:grid-cols-4 gap-8 text-center">
-          <li class="flex flex-col items-center">
-            <span class="rounded-full bg-blue-900 text-white w-14 h-14 flex items-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </span>
-            <span class="font-semibold">Request</span>
-            <span class="text-slate-500 text-sm">Call or email with your cargo details</span>
+    <section id="process" class="py-20 bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">How It Works</h2>
+          <p class="text-lg text-slate-600 max-w-2xl mx-auto">A streamlined process from request to comprehensive reporting</p>
+        </div>
+        <ol class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <li class="flex flex-col items-center text-center group">
+            <div class="relative mb-6">
+              <span class="rounded-full bg-blue-900 text-white w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </span>
+              <span class="absolute -top-2 -right-2 bg-blue-700 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">1</span>
+            </div>
+            <h3 class="font-bold text-lg text-blue-900 mb-2">Request</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Call or email with your cargo details</p>
           </li>
-          <li class="flex flex-col items-center">
-            <span class="rounded-full bg-blue-700 text-white w-14 h-14 flex items-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.5l6 2.25v4.5c0 3.04-2.13 5.83-6 7.75-3.87-1.92-6-4.71-6-7.75v-4.5L12 6.5z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 12.5l2 2 3.5-3.5" />
-              </svg>
-            </span>
-            <span class="font-semibold">Survey</span>
-            <span class="text-slate-500 text-sm">On-site inspection, digital evidence, rapid reporting</span>
+          <li class="flex flex-col items-center text-center group">
+            <div class="relative mb-6">
+              <span class="rounded-full bg-blue-700 text-white w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.5l6 2.25v4.5c0 3.04-2.13 5.83-6 7.75-3.87-1.92-6-4.71-6-7.75v-4.5L12 6.5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 12.5l2 2 3.5-3.5" />
+                </svg>
+              </span>
+              <span class="absolute -top-2 -right-2 bg-blue-900 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">2</span>
+            </div>
+            <h3 class="font-bold text-lg text-blue-900 mb-2">Survey</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">On-site inspection, digital evidence, rapid reporting</p>
           </li>
-          <li class="flex flex-col items-center">
-            <span class="rounded-full bg-yellow-400 text-blue-900 w-14 h-14 flex items-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a7 7 0 017 7c0 4.25-3 8.5-7 10-4-1.5-7-5.75-7-10a7 7 0 017-7z" />
-                <circle cx="12" cy="9" r="2" stroke="currentColor" stroke-width="2" />
-              </svg>
-            </span>
-            <span class="font-semibold">Recovery</span>
-            <span class="text-slate-500 text-sm">Loss mitigation, salvage, claim support</span>
+          <li class="flex flex-col items-center text-center group">
+            <div class="relative mb-6">
+              <span class="rounded-full bg-yellow-400 text-blue-900 w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a7 7 0 017 7c0 4.25-3 8.5-7 10-4-1.5-7-5.75-7-10a7 7 0 017-7z" />
+                  <circle cx="12" cy="9" r="2" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </span>
+              <span class="absolute -top-2 -right-2 bg-blue-900 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">3</span>
+            </div>
+            <h3 class="font-bold text-lg text-blue-900 mb-2">Recovery</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Loss mitigation, salvage, claim support</p>
           </li>
-          <li class="flex flex-col items-center">
-            <span class="rounded-full bg-slate-300 text-blue-900 w-14 h-14 flex items-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-6 9 6-9 6-9-6zm0 0v4l9 6 9-6v-4" />
-              </svg>
-            </span>
-            <span class="font-semibold">Report</span>
-            <span class="text-slate-500 text-sm">Comprehensive docs for your underwriter</span>
+          <li class="flex flex-col items-center text-center group">
+            <div class="relative mb-6">
+              <span class="rounded-full bg-slate-300 text-blue-900 w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-6 9 6-9 6-9-6zm0 0v4l9 6 9-6v-4" />
+                </svg>
+              </span>
+              <span class="absolute -top-2 -right-2 bg-blue-900 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">4</span>
+            </div>
+            <h3 class="font-bold text-lg text-blue-900 mb-2">Report</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Comprehensive docs for your underwriter</p>
           </li>
         </ol>
       </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-white border-t border-slate-200">
-      <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-12 items-center">
-        <div class="flex-1">
-          <h2 class="text-3xl font-bold text-blue-900 mb-4">About Axionix</h2>
-          <p class="text-slate-600 leading-relaxed">
-            Axionix is a modern, technology-enabled survey and recovery firm. We serve logistics providers, underwriters, and cargo owners with accuracy, independence, and speed&mdash;across air, sea, and heavy-road transport modes.
-          </p>
+    <section id="about" class="py-20 bg-white border-t border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div class="order-2 lg:order-1">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-6">About Axionix</h2>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6">
+              Axionix is a modern, technology-enabled survey and recovery firm. We serve logistics providers, underwriters, and cargo owners with accuracy, independence, and speed&mdash;across air, sea, and heavy-road transport modes.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-blue-900 mb-1">Independent & Certified</h3>
+                  <p class="text-slate-600 text-sm">Fully insured and certified surveyors with industry-recognized credentials</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-blue-900 mb-1">Rapid Response</h3>
+                  <p class="text-slate-600 text-sm">24/7 availability for emergency call-outs and time-sensitive surveys</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-blue-900 mb-1">Digital Documentation</h3>
+                  <p class="text-slate-600 text-sm">Technology-driven chain-of-custody and comprehensive digital reporting</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="relative rounded-xl overflow-hidden shadow-lg image-zoom">
+                <img src="images/ship-cargo2.jpg" alt="Marine cargo operations" class="w-full h-64 object-cover">
+              </div>
+              <div class="relative rounded-xl overflow-hidden shadow-lg image-zoom mt-8">
+                <img src="images/heavy-cargo.jpg" alt="Heavy cargo transport" class="w-full h-64 object-cover">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-slate-900 text-white">
-      <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 items-center">
-        <div class="flex-1 space-y-4">
-          <h2 class="text-3xl font-bold">Request a Survey</h2>
-          <p class="text-slate-200">
+    <section id="contact" class="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-700 rounded-full blur-3xl"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Request a Survey</h2>
+          <p class="text-lg text-slate-200 max-w-2xl mx-auto">
             Need rapid support? Call us any time or send the consignment details to schedule a survey and recovery team.
           </p>
-          <div class="flex flex-col gap-3">
-            <a href="tel:+27823143143" class="inline-flex items-center gap-2 text-lg font-semibold text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 4.5l3-1.5 4.5 7.5-2.5 1.5a11 11 0 005.75 5.75l1.5-2.5 7.5 4.5-1.5 3c-.25.5-.74.8-1.29.75C8.5 22.25 1.75 15.5 1.25 6.04c-.03-.55.25-1.04.75-1.29z" />
-              </svg>
-              082 314 314 3
-            </a>
-            <a href="mailto:madoda@axionixsurveyors.co.za" class="inline-flex items-center gap-2 text-lg font-semibold text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4V4zm0 0l8 6 8-6" />
-              </svg>
-              madoda@axionixsurveyors.co.za
-            </a>
-          </div>
         </div>
-        <div class="flex-1 w-full">
-          <form id="contact-form" class="bg-white text-slate-900 rounded-xl p-6 shadow-lg space-y-4">
-            <div>
-              <label class="block text-sm font-semibold text-slate-700" for="name">Name</label>
-              <input
-                id="name"
-                type="text"
-                class="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Your name"
-                required
-              />
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <div class="space-y-8">
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
+              <div class="space-y-4">
+                <a href="tel:+27823143143" class="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group">
+                  <div class="flex-shrink-0 w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 4.5l3-1.5 4.5 7.5-2.5 1.5a11 11 0 005.75 5.75l1.5-2.5 7.5 4.5-1.5 3c-.25.5-.74.8-1.29.75C8.5 22.25 1.75 15.5 1.25 6.04c-.03-.55.25-1.04.75-1.29z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm text-slate-300">Phone</p>
+                    <p class="text-lg font-semibold">082 314 314 3</p>
+                  </div>
+                </a>
+                <a href="mailto:madoda@axionixsurveyors.co.za" class="flex items-center gap-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors group">
+                  <div class="flex-shrink-0 w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4V4zm0 0l8 6 8-6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm text-slate-300">Email</p>
+                    <p class="text-lg font-semibold break-all">madoda@axionixsurveyors.co.za</p>
+                  </div>
+                </a>
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700" for="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                class="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="you@example.com"
-                required
-              />
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <h3 class="text-xl font-semibold mb-4">Why Choose Axionix?</h3>
+              <ul class="space-y-3 text-slate-200">
+                <li class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span>24/7 emergency response</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Fully insured & certified</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Digital chain-of-custody</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Rapid reporting & documentation</span>
+                </li>
+              </ul>
             </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700" for="details">Cargo Details</label>
-              <textarea
-                id="details"
-                class="w-full mt-1 rounded-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
-                placeholder="Describe the cargo, location, and timeline"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" class="w-full rounded-lg bg-blue-700 text-white font-semibold px-4 py-3 hover:bg-blue-800 transition-colors">
-              Send Request
-            </button>
-          </form>
+          </div>
+          <div class="w-full">
+            <form id="contact-form" class="bg-white text-slate-900 rounded-2xl p-8 shadow-2xl space-y-6">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2" for="name">Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  class="w-full rounded-lg border-2 border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2" for="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  class="w-full rounded-lg border-2 border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2" for="details">Cargo Details</label>
+                <textarea
+                  id="details"
+                  class="w-full rounded-lg border-2 border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                  rows="5"
+                  placeholder="Describe the cargo, location, and timeline"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="w-full rounded-lg bg-blue-700 text-white font-semibold px-6 py-3.5 shadow-lg hover:bg-blue-800 hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                Send Request
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
     <script>
-      // Simple mailto handler to open the user's email client with the form data
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      
+      mobileMenuBtn?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+      });
+      
+      // Close mobile menu when clicking a link
+      const mobileLinks = mobileMenu?.querySelectorAll("a");
+      mobileLinks?.forEach(link => {
+        link.addEventListener("click", () => {
+          mobileMenu?.classList.add("hidden");
+        });
+      });
+      
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        });
+      });
+      
+      // Form submission handler
       const form = document.getElementById("contact-form");
       form?.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -274,6 +598,104 @@
         const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nDetails: ${details}`);
         window.location.href = `mailto:madoda@axionixsurveyors.co.za?subject=${subject}&body=${body}`;
       });
+      
+      // Intersection Observer for fade-in animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fade-in");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      
+      // Observe elements for animation
+      document.querySelectorAll("section > div").forEach(el => {
+        observer.observe(el);
+      });
+      
+      // Hero Slideshow
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      const prevBtn = document.querySelector('.hero-slide-prev');
+      const nextBtn = document.querySelector('.hero-slide-next');
+      let slideInterval;
+      
+      function showSlide(index) {
+        // Remove active class from all slides and dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => {
+          dot.classList.remove('active', 'bg-white');
+          dot.classList.add('bg-white/50');
+        });
+        
+        // Add active class to current slide and dot
+        if (slides[index]) {
+          slides[index].classList.add('active');
+        }
+        if (dots[index]) {
+          dots[index].classList.add('active', 'bg-white');
+          dots[index].classList.remove('bg-white/50');
+        }
+      }
+      
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+      
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+      
+      function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+      }
+      
+      function stopSlideshow() {
+        clearInterval(slideInterval);
+      }
+      
+      // Initialize slideshow
+      if (slides.length > 0) {
+        showSlide(0);
+        startSlideshow();
+        
+        // Navigation buttons
+        nextBtn?.addEventListener('click', () => {
+          nextSlide();
+          stopSlideshow();
+          startSlideshow(); // Restart timer
+        });
+        
+        prevBtn?.addEventListener('click', () => {
+          prevSlide();
+          stopSlideshow();
+          startSlideshow(); // Restart timer
+        });
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+            stopSlideshow();
+            startSlideshow(); // Restart timer
+          });
+        });
+        
+        // Pause on hover
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        slideshowContainer?.addEventListener('mouseenter', stopSlideshow);
+        slideshowContainer?.addEventListener('mouseleave', startSlideshow);
+      }
     </script>
   </body>
 </html>
